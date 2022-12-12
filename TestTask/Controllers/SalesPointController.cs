@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TestTask.Models;
@@ -21,7 +22,7 @@ namespace TestTask.Controllers
         [HttpGet]
         public IEnumerable<SalesPoint> Get()
         {
-            var list = _dbContext.SalesPoints;
+            var list = _dbContext.SalesPoints.Include(x => x.ProvidedProducts);
             return list;
         }
 
@@ -29,7 +30,7 @@ namespace TestTask.Controllers
         [HttpGet("{id}")]
         public SalesPoint Get(int id)
         {
-            var point = _dbContext.SalesPoints.FirstOrDefault(x=>x.Id == id);
+            var point = _dbContext.SalesPoints.Include(x => x.ProvidedProducts).FirstOrDefault(x=>x.Id == id);
 
             return point ;
         }

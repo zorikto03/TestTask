@@ -30,6 +30,7 @@ D:\VS_repos\TestTask\bin\Debug\TestTask.dll
 D:\VS_repos\TestTask\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\VS_repos\TestTask\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\VS_repos\TestTask\bin\Debug\Microsoft.EntityFrameworkCore.dll
+D:\VS_repos\TestTask\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 D:\VS_repos\TestTask\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
 D:\VS_repos\TestTask\bin\Debug\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\VS_repos\TestTask\bin\Debug\Microsoft.OpenApi.dll
@@ -41,4 +42,3 @@ D:\VS_repos\TestTask\bin\Debug\TestTask.pdb
 D:\VS_repos\TestTask\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 D:\VS_repos\TestTask\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 D:\VS_repos\TestTask\obj\Debug\docker-compose.dcproj.CopyComplete
-D:\VS_repos\TestTask\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll

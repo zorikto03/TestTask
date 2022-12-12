@@ -19,19 +19,16 @@ namespace TestTask.Controllers
         }
 
         
-        [HttpGet]
+        [HttpPost]
         public IActionResult Sale([FromBody] Sale sale)
         {
             string message = string.Empty;
             var buyerId = GetBuyerId();
-            int pointId = sale.SalesPointId;
 
             sale.BuyerId = buyerId;
             sale.Date = System.DateTime.Now;
-            _context.Sales.Add(sale);
-            _context.SaveChanges();
 
-            var salePoint = _context.SalesPoints.Include(x=>x.ProvidedProducts).FirstOrDefault(x=>x.Id == pointId);
+            var salePoint = _context.SalesPoints.Include(x=>x.ProvidedProducts).FirstOrDefault(x=>x.Id == sale.SalesPointId);
             if (salePoint != null)
             {
                 if (CheckSale(sale.SalesData, salePoint, out message))
@@ -43,20 +40,24 @@ namespace TestTask.Controllers
                         {
                             provided.Count -= i.ProductQuantity;
                         }
+                        _context.SalesData.Add(i);
+
                     });
+                    _context.Sales.Add(sale);
+                    _context.SaveChanges();
                     return Ok(message);
                 }
                 return BadRequest(message);
             }
 
-            return BadRequest($"SalePointId: {pointId} not found");
+            return BadRequest($"SalePointId: {sale.SalesPointId} not found");
         }
 
         int? GetBuyerId()
         {
             int? buyerId = null;
             var buyer = User.Identities.FirstOrDefault().Claims.ToList();
-            var name = buyer.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            var name = buyer.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType)?.Value;
             if (name != null)
             {
                 buyerId = _context.Buyers.FirstOrDefault(x => x.Name == name)?.Id;
