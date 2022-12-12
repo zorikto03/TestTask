@@ -20,8 +20,8 @@ namespace TestTask.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> LoginAsync(LoginModel model)
+        [HttpPost]
+        public async Task<IActionResult> BuyerLogin(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -45,6 +45,13 @@ namespace TestTask.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuyerLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok();
         }
     }
 }

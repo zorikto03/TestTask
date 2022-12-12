@@ -17,6 +17,9 @@ namespace TestTask.Models
         public virtual DbSet<Buyer> Buyers { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
         public virtual DbSet<SalesPoint> SalesPoints { get; set; }
+        public virtual DbSet<SaleData> SalesData { get; set; }
+        public virtual DbSet<ProvidedProduct> ProvidedProducts { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
