@@ -9,6 +9,7 @@
 
         public ProvidedProduct(int salesPointId, int productId, int count)
         {
+            SalesPointId = salesPointId;
             ProductId = productId;
             Count = count;
         }

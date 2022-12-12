@@ -25,13 +25,23 @@ namespace TestTask.Controllers
         {
             if (ModelState.IsValid)
             {
-                Buyer buyer = await _context.Buyers.FirstOrDefaultAsync(x => x.Name == model.Name && x.Password == model.Password);
-                if (buyer != null)
+                using (var context = new TT_DB_Context())
                 {
-                    await Authenticate(buyer);
+                    var buyer = await _context.Buyers.FirstOrDefaultAsync(x => x.Name == model.Name && x.Password == model.Password);
+                    if (buyer != null)
+                    {
+                        await Authenticate(buyer);
 
-                    return Ok("Login success");
+                        return Ok("Login success");
+                    }
                 }
+                //Buyer buyer = await _context.Buyers.FirstOrDefaultAsync(x => x.Name == model.Name && x.Password == model.Password);
+                //if (buyer != null)
+                //{
+                //    await Authenticate(buyer);
+
+                //    return Ok("Login success");
+                //}
             }
             return BadRequest();
         }

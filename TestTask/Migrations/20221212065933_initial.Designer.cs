@@ -10,7 +10,7 @@ using TestTask.Models;
 namespace TestTask.Migrations
 {
     [DbContext(typeof(TT_DB_Context))]
-    [Migration("20221211115539_initial")]
+    [Migration("20221212065933_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,9 @@ namespace TestTask.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -74,7 +77,7 @@ namespace TestTask.Migrations
 
                     b.HasIndex("SalesPointId");
 
-                    b.ToTable("ProvidedProduct");
+                    b.ToTable("ProvidedProducts");
                 });
 
             modelBuilder.Entity("TestTask.Models.Sale", b =>
@@ -126,7 +129,7 @@ namespace TestTask.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleData");
+                    b.ToTable("SalesData");
                 });
 
             modelBuilder.Entity("TestTask.Models.SalesPoint", b =>

@@ -11,10 +11,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     image: testtask
-    links:
-    - testtaskdb
     networks:
-      dev: null
+      default: null
     ports:
     - mode: ingress
       target: 80
@@ -31,7 +29,7 @@ services:
       POSTGRES_USER: user
     image: postgres:15.1-alpine
     networks:
-      dev: null
+      default: null
     ports:
     - mode: ingress
       target: 5432
@@ -39,6 +37,5 @@ services:
       protocol: tcp
     restart: always
 networks:
-  dev:
-    name: dockercompose9311805908076437699_dev
-    driver: bridge
+  default:
+    name: dockercompose9311805908076437699_default

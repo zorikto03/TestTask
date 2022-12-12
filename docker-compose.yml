@@ -15,20 +15,15 @@ services:
     ports:
         - "5433:5432"
     restart: "always"
-    networks: 
-      - dev
+
 
   testtask:
     container_name: tt_aspnetcore
     image: testtask
-    links:
-      - testtaskdb
     depends_on:
       - "testtaskdb"
     build:
       context: .
       dockerfile: TestTask/Dockerfile
     ports:
-      - "5000:80"
-    networks:
-      - dev
+        - "5000:80" 

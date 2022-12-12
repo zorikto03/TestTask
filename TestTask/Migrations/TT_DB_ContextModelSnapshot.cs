@@ -29,6 +29,9 @@ namespace TestTask.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Buyers");
@@ -72,7 +75,7 @@ namespace TestTask.Migrations
 
                     b.HasIndex("SalesPointId");
 
-                    b.ToTable("ProvidedProduct");
+                    b.ToTable("ProvidedProducts");
                 });
 
             modelBuilder.Entity("TestTask.Models.Sale", b =>
@@ -124,7 +127,7 @@ namespace TestTask.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleData");
+                    b.ToTable("SalesData");
                 });
 
             modelBuilder.Entity("TestTask.Models.SalesPoint", b =>

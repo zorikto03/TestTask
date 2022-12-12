@@ -28,6 +28,8 @@ namespace TestTask.Models
 
                 context.Add(provided);
                 context.Add(provided2); 
+                point.ProvidedProducts.Add(provided);
+                point.ProvidedProducts.Add(provided2);
                 context.SaveChanges();
             }
         }

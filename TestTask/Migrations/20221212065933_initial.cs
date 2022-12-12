@@ -14,7 +14,8 @@ namespace TestTask.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,7 +72,7 @@ namespace TestTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProvidedProduct",
+                name: "ProvidedProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -82,9 +83,9 @@ namespace TestTask.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProvidedProduct", x => x.Id);
+                    table.PrimaryKey("PK_ProvidedProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProvidedProduct_SalesPoints_SalesPointId",
+                        name: "FK_ProvidedProducts_SalesPoints_SalesPointId",
                         column: x => x.SalesPointId,
                         principalTable: "SalesPoints",
                         principalColumn: "Id",
@@ -92,7 +93,7 @@ namespace TestTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SaleData",
+                name: "SalesData",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -104,9 +105,9 @@ namespace TestTask.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SaleData", x => x.Id);
+                    table.PrimaryKey("PK_SalesData", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SaleData_Sales_SaleId",
+                        name: "FK_SalesData_Sales_SaleId",
                         column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "Id",
@@ -114,19 +115,19 @@ namespace TestTask.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProvidedProduct_SalesPointId",
-                table: "ProvidedProduct",
+                name: "IX_ProvidedProducts_SalesPointId",
+                table: "ProvidedProducts",
                 column: "SalesPointId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SaleData_SaleId",
-                table: "SaleData",
-                column: "SaleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_BuyerId",
                 table: "Sales",
                 column: "BuyerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesData_SaleId",
+                table: "SalesData",
+                column: "SaleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,10 +136,10 @@ namespace TestTask.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "ProvidedProduct");
+                name: "ProvidedProducts");
 
             migrationBuilder.DropTable(
-                name: "SaleData");
+                name: "SalesData");
 
             migrationBuilder.DropTable(
                 name: "SalesPoints");
