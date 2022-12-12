@@ -1,0 +1,103 @@
+name: dockercompose9311805908076437699
+services:
+  testtask:
+    build:
+      context: D:\VS_repos\TestTask
+      dockerfile: TestTask/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: TestTask
+      target: base
+    container_name: tt_aspnetcore
+    depends_on:
+      testtaskdb:
+        condition: service_started
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
+    image: testtask:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages  "C:/Users/Zorikto/source/repos/TestTask/TestTask/bin/Debug/net5.0/TestTask.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    links:
+    - testtaskdb
+    networks:
+      dev: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "5000"
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\VS_repos\TestTask\TestTask
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\VS_repos\TestTask
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Zorikto\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Zorikto\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Zorikto\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Zorikto\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  testtaskdb:
+    container_name: tt_postgres
+    environment:
+      POSTGRES_DB: TestTaskDB
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: user
+    image: postgres:15.1-alpine
+    networks:
+      dev: null
+    ports:
+    - mode: ingress
+      target: 5432
+      published: "5433"
+      protocol: tcp
+    restart: always
+networks:
+  dev:
+    name: dockercompose9311805908076437699_dev
+    driver: bridge

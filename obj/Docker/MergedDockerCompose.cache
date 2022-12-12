@@ -1,0 +1,44 @@
+name: dockercompose9311805908076437699
+services:
+  testtask:
+    build:
+      context: D:\VS_repos\TestTask
+      dockerfile: TestTask/Dockerfile
+    container_name: tt_aspnetcore
+    depends_on:
+      testtaskdb:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: testtask
+    links:
+    - testtaskdb
+    networks:
+      dev: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "5000"
+      protocol: tcp
+  testtaskdb:
+    container_name: tt_postgres
+    environment:
+      POSTGRES_DB: TestTaskDB
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: user
+    image: postgres:15.1-alpine
+    networks:
+      dev: null
+    ports:
+    - mode: ingress
+      target: 5432
+      published: "5433"
+      protocol: tcp
+    restart: always
+networks:
+  dev:
+    name: dockercompose9311805908076437699_dev
+    driver: bridge
